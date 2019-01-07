@@ -16,6 +16,9 @@ Parameters:
   VpcId:
     Type: String
 
+  Certificate:
+    Type: String
+
 
 Conditions:
   EC2: !Equals [ !Ref LaunchType, "EC2" ]
@@ -49,6 +52,20 @@ Resources:
       DefaultActions:
         - Type: forward
           TargetGroupArn: !Ref TargetGroup
+
+  SecureLoadBalancerListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 443
+      Protocol: HTTPS
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref TargetGroup
+      Certificates:
+        - CertificateArn: !Ref Certificate
+
+
 
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup

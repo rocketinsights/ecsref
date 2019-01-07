@@ -42,6 +42,10 @@ Parameters:
     Description: >
       Token for the user specified above. (https://github.com/settings/tokens)
 
+  CertificateARN:
+    Type: String
+    Description: The ARN for the SSL certificate
+
   TemplateBucket:
     Type: String
     Default: ecs-refarch-continuous-deployment
@@ -113,6 +117,7 @@ Resources:
         LaunchType: !Ref LaunchType
         Subnets: !GetAtt VPC.Outputs.Subnets
         VpcId: !GetAtt VPC.Outputs.VpcId
+        Certificate: !Ref CertificateARN
 
   VPC:
     Type: AWS::CloudFormation::Stack

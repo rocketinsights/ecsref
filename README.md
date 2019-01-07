@@ -1,3 +1,5 @@
+Note: Extended from original AWS ECS Reference architecture to support production requirements
+
 # ECS Reference Architecture: Continuous Deployment
 
 The ECS Continuous Deployment reference architecture demonstrates how to achieve
