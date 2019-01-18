@@ -48,7 +48,7 @@ Parameters:
 
   TemplateBucket:
     Type: String
-    Default: ecs-refarch-continuous-deployment
+    Default: ecs-continuous-deployment
     Description: >
       The S3 bucket from which to fetch the templates used by this stack.
 
@@ -71,6 +71,7 @@ Metadata:
           default: Cluster Configuration
         Parameters:
           - LaunchType
+          - Certificate
       - Label:
           default: GitHub Configuration
         Parameters:

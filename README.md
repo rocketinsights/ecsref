@@ -21,7 +21,7 @@ group of t2.micro instances will be created to host your service.
 
 [![](images/architecture.png)][architecture]
 
-## Running the example
+## Running a project
 
 #### 1. Reference a working Docker Enabled Project
 
@@ -56,6 +56,7 @@ The CloudFormation template requires the following parameters:
     Selecting EC2 will create an Auto Scaling group of t2.micro instances for
     your cluster. See the [documentation][launch-types] to learn more about
     launch types.
+  - **Domain**: The domain name used to map to the LoadBalancer (a certificate will be generated)
 
 - GitHub Configuration
   - **Repo**: The repo name of the sample service.
@@ -70,7 +71,7 @@ The CloudFormation stack provides the following output:
 - **PipelineUrl**: The continuous deployment pipeline in the AWS Management
   Console.
 
-### Testing the example
+### Testing the project
 
 After the CloudFormation stack is created, the latest commit to the GitHub
 repository is run through the pipeline and deployed to ECS. Open the
