@@ -42,8 +42,9 @@ Parameters:
     Description: >
       Token for the user specified above. (https://github.com/settings/tokens)
 
-  CertificateARN:
+  Certificate:
     Type: String
+    Default: ''
     Description: The ARN for the SSL certificate
 
   TemplateBucket:
@@ -66,6 +67,8 @@ Metadata:
         default: "Personal Access Token"
       LaunchType:
         default: "Launch Type"
+      Certificate:
+        default: "Certificate ARN"
     ParameterGroups:
       - Label:
           default: Cluster Configuration
@@ -118,7 +121,7 @@ Resources:
         LaunchType: !Ref LaunchType
         Subnets: !GetAtt VPC.Outputs.Subnets
         VpcId: !GetAtt VPC.Outputs.VpcId
-        Certificate: !Ref CertificateARN
+        Certificate: !Ref Certificate
 
   VPC:
     Type: AWS::CloudFormation::Stack
