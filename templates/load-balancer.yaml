@@ -1,6 +1,7 @@
 ---
 AWSTemplateFormatVersion: 2010-09-09
 
+
 Parameters:
   LaunchType:
     Type: String
@@ -17,8 +18,6 @@ Parameters:
 
   Certificate:
     Type: String
-    Default: ''
-
 
 
 Conditions:
@@ -44,43 +43,29 @@ Resources:
       SecurityGroups:
         - !Ref SecurityGroup
 
- LoadBalancerListener:
+  LoadBalancerListener:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
       LoadBalancerArn: !Ref LoadBalancer
       Port: 80
       Protocol: HTTP
       DefaultActions:
-        - Type: redirect
+        - Type: forward
           TargetGroupArn: !Ref TargetGroup
-        - RedirectConfig:
-            Host: "#{host}"
-            Path: "/#{path}"
-            Port: "443",
-            Protocol: "HTTPS"
-            Query: "#{query}"
-            StatusCode: "HTTP_302"
 
   SecureLoadBalancerListener:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
-      Certificates:
-      - CertificateArn: !Ref Certificate
       LoadBalancerArn: !Ref LoadBalancer
       Port: 443
       Protocol: HTTPS
-      SslPolicy: "ELBSecurityPolicy-2016-08"
       DefaultActions:
         - Type: forward
           TargetGroupArn: !Ref TargetGroup
+      Certificates:
+        - CertificateArn: !Ref Certificate
 
 
-  ListenerCertificate:
-   Type: AWS::ElasticLoadBalancingV2::ListenerCertificate
-   Properties:
-     Certificates:
-     - CertificateArn: !Ref Certificate
-     ListenerArn: !Ref SecureLoadBalancerListener
 
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
@@ -113,6 +98,7 @@ Resources:
       Actions:
         - TargetGroupArn: !Ref TargetGroup
           Type: forward
+
 
 Outputs:
   TargetGroup:

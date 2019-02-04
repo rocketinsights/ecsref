@@ -37,21 +37,31 @@ Parameters:
     Description: The branch of the repo to continuously deploy.
 
   GitHubToken:
-    Type: String
-    NoEcho: true
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/ecs-pipeline/github_token'
     Description: >
       Token for the user specified above. (https://github.com/settings/tokens)
 
   Certificate:
-    Type: String
-    Default: ''
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/ecs-pipeline/certificate_arn'
     Description: The ARN for the SSL certificate
 
   TemplateBucket:
-    Type: String
-    Default: ecs-continuous-deployment
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/ecs-pipeline/template_bucket'
     Description: >
       The S3 bucket from which to fetch the templates used by this stack.
+
+  AccessKey:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/ecs-pipeline/access_key'
+    Description: AccessKey used during CodeDeploy
+
+  SecretKey:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/ecs-pipeline/secret_key'
+    Description: SecretKey used during CodeDeploy
 
 
 Metadata:
@@ -64,11 +74,15 @@ Metadata:
       GitHubBranch:
         default: "Branch"
       GitHubToken:
-        default: "Personal Access Token"
+        default: "GitHub Personal Access Token"
       LaunchType:
         default: "Launch Type"
       Certificate:
         default: "Certificate ARN"
+      AccessKey:
+        default: "Build AccessKey"
+      SecretKey:
+        default: "Build SecretKey"
     ParameterGroups:
       - Label:
           default: Cluster Configuration
@@ -81,11 +95,13 @@ Metadata:
           - GitHubRepo
           - GitHubBranch
           - GitHubUser
-          - GitHubToken
       - Label:
-          default: Stack Configuration
+          default: Stack Configuration  (ParameterStore locations)
         Parameters:
+          - GitHubToken
           - TemplateBucket
+          - AccessKey
+          - SecretKey
 
 
 Resources:
@@ -112,6 +128,8 @@ Resources:
         GitHubBranch: !Ref GitHubBranch
         Repository: !GetAtt Cluster.Outputs.RepositoryName
         Container: !GetAtt Service.Outputs.Container
+        AccessKey: !Ref AccessKey
+        SecretKey: !Ref SecretKey
 
   LoadBalancer:
     Type: AWS::CloudFormation::Stack
