@@ -84,9 +84,9 @@ After the CloudFormation stack is created, the latest commit to the GitHub
 repository is run through the pipeline and deployed to ECS. Open the
 **PipelineUrl** to watch the first revision run through the CodePipeline
 pipeline. After the deploy step turns green, open the URL from **ServiceUrl**
-which loads a page similar to this:
-
-![ECS sample app](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/images/simple-php-app.png)
+which loads one or two outcomes ***after build***:
+- ***On Failure*** : The default index page for Tomcat 8.0 will be displayed
+- ***On Success*** : Contents returned at '/' of your service will be displayed 
 
 To test continuous deployment, make a change to your source repository and push it to GitHub. CodePipeline detects the change, builds the new application, and deploys it to your cluster
 automatically. After the pipeline finishes deploying the revision, reload the
