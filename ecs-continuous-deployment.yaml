@@ -88,7 +88,6 @@ Metadata:
           default: Cluster Configuration
         Parameters:
           - LaunchType
-          - Certificate
       - Label:
           default: GitHub Configuration
         Parameters:
@@ -102,6 +101,7 @@ Metadata:
           - TemplateBucket
           - AccessKey
           - SecretKey
+          - Certificate
 
 
 Resources:

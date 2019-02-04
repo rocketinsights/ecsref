@@ -64,6 +64,13 @@ The CloudFormation template requires the following parameters:
   - **User**: Your username on GitHub.
   - **Personal Access Token**: Token for the user specified above.
     ([https://github.com/settings/tokens](https://github.com/settings/tokens))
+    
+- Stack Configuration (configure in SSM ParameterStore)
+  - ***GitHubToken***: The Github Personal Accesstoken 
+  - ***TemplateBucket***: The bucket the template is stored at
+  - ***AccessKey***: An AWS AccessKey with sufficient permissions to access Docker build dependencies
+  - ***SecretKey***: Matching secretkey from AWS credential key pair 
+  - ***Certificate***: The ARN for the SSL certificate  
 
 The CloudFormation stack provides the following output:
 
